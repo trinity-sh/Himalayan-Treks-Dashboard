@@ -1,40 +1,11 @@
-.btn-grad {
-        background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
-        margin: 10px;
-        padding: 15px 45px;
-        text-align: center;
-        text-transform: uppercase;
-        transition: 0.5s;
-        background-size: 200% auto;
-        color: white;            
-        box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
-        border-radius: 10px;
-        border: 0;
-        outline: none;
-}
-
-.btn-grad:hover {
-        background-position: right center; /* change the direction of the change here */
-        color: #fff;
-        text-decoration: none;
-        outline: none;
-}
-
-.btn-grad:focus {
-        outline: none;
-}
-
-/* #side-panel { 
-  position: fixed;
-  width: 23%;
+#sub-root-div {
+  display: inline;
   height: 100%;
-  margin: 0px;
-  background-image: 'url(../src/assets/him.jpg)';
-  min-width: 300px;
-  z-index: 6;
-  box-shadow: 1px 0px 8px 5px rgba(0,0,0,0.2)
-} */
+  width: 100%;
+}
 
-#side-panel{
-        background-image: url(./assets/him.jpg);
+body {
+  background-color: rgb(241, 241, 241);
+  overflow-y: auto;
+  height: 100%;
 }
