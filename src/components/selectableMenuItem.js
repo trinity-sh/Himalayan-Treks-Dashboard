@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '../styles/selectable-menu.css';
 
 function selectableMenuItem(props) {
-  console.log(`received ${props.isInvoked} for ${props.id}`)
   const [isInvoked, setIsInvokedState] = useState(props.isInvoked);
   useEffect(() => setIsInvokedState(props.isInvoked), [props.isInvoked]);
 
