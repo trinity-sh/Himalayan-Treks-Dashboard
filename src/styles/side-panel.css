@@ -1,0 +1,24 @@
+#side-panel { 
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: center;
+  display: block;
+  width: 15%;
+  height: 100%;
+  margin: 0px;
+  background-color: rgb(240, 240, 240);
+  background: 
+    linear-gradient(45deg,rgba(255, 255, 255, 0.8),rgba(255, 255, 255, 0.8))
+    /* url(https://wallpapercave.com/wp/wp5105314.jpg) */;
+  background-size: contain, cover;
+  min-width: 260px;
+  z-index: 6;
+  box-shadow: 1px 0px 8px 5px rgba(0,0,0,0.1)
+}
+
+/* @media (max-width:480px)  {
+  #side-panel {
+    visibility: collapse;
+  }
+} */
