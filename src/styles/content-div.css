@@ -1,0 +1,167 @@
+#main-content-div {
+  height: 100%;
+  position: fixed;
+  display: block;
+  right: 0px;
+  z-index: 1;
+}
+
+#content-div-bar {
+  background-color: white;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-shadow: 1px 0px 8px 1px rgba(0,0,0,0.1);
+}
+
+.content-div-indent {
+  display: block;
+  overflow-x: scroll;
+  margin: 20px;
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: white;
+}
+
+.content-font-header-1 {
+  font-family: 'Montserrat';
+  font-size: 30px;
+  color: #414141;
+  font-weight: 600;
+}
+
+.content-font-header-2 {
+  font-family: 'Montserrat';
+  font-size: 13px;
+  color: #5d677e;
+  font-weight: 600;
+}
+
+.content-font-sub-2 {
+  font-family: 'Montserrat';
+  font-size: 13px;
+  color: #6e7a97;
+  font-weight: 500;
+}
+
+.content-font-sub-2-mono {
+  font-family: 'Fira Mono';
+  font-size: 13px;
+  color: #6e7a97;
+  font-weight: 500;
+}
+
+.item-box {
+  display: block;
+  border-radius: 5px;
+  overflow-x: auto;
+  background: white;
+  transition: 0.5s;
+  border: 1px solid;
+  border-color: #d3d3d3;
+  min-height: 50px;
+  padding: 30px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0);
+  min-width: 860px;
+}
+
+.table {
+  width: 100%;
+  overflow-y: auto;
+  display: table;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  padding: 5px;
+  overflow-x: auto;
+  display: table-cell;
+  max-width: 400px;
+}
+
+.item-box-flex-row-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.item-box-flex-row-item {
+  overflow-x: auto;
+  flex: 1 1 auto;
+  display: inline-flex;
+}
+
+.item-box:hover {
+  transition: 0.5s;
+  box-shadow: 0px 0px 80px 10px rgba(0, 0, 0, 0.1);
+}
+
+.db-box {
+  border-radius: 10px;
+  background-color: white;
+  overflow: auto;
+  border: 1px solid;
+  border-color: #c6c6c6;
+}
+
+/* .item-box:active {
+  background-color: rgb(238, 238, 238);
+} */
+
+.db-button {
+  margin: 20px;
+  align-items: center;
+  width: 120px;
+  appearance: none;
+  background-color: #f5f5f5;
+  border-width: 0px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Ubuntu Mono", monospace;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.button-cancel {
+  background-color: rgb(176, 34, 34);
+  width: 70px;
+  margin: 5px;
+  color: white;
+}
+
+.button-update {
+  background-color: rgb(98, 176, 34);
+  width: 70px;
+  margin: 5px;
+  color: white;
+}
+
+.db-button:hover {
+  box-shadow: rgba(45, 35, 66, 0.2) 0 1px 4px;
+}
+
+.db-button:active {
+  box-shadow: #D6D6E7 0 1px 4px inset;
+}
