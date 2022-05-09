@@ -1,0 +1,92 @@
+.btn-grad-active {
+  width: 90%;
+  font-size: 13px;
+  font-weight: 500;
+  font: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+  margin: 10px;
+  padding: 15px 45px;
+  /* text-transform: uppercase; */
+  transition: 0.4s;
+  background-size: 200% auto;
+  color: white;            
+  box-shadow: 3px 3px 0px 1px rgba(0, 0, 255, .2);
+  border-radius: 10px;
+  border: 0;
+  outline: none;
+}
+
+.btn-grad-active-icon {
+  height: 100%;
+  color: white;
+}
+
+.btn-grad-active-label {
+  position: relative;
+  top: 50%;
+  bottom: 50%;
+  display: inline-block;
+  color: white;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  font-family: "Montserrat";
+}
+
+.btn-grad {
+  width: 90%;
+  font-size: 13px;
+  font-weight: 500;
+  font: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  margin: 10px;
+  padding: 15px 45px;
+  /* text-transform: uppercase; */
+  transition: 0.4s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  border: 0;
+  outline: none;
+}
+
+.btn-grad-icon {
+  height: 100%;
+  color: black;
+}
+
+
+.btn-grad-label {
+  position: relative;
+  top: 50%;
+  bottom: 50%;
+  display: inline-block;
+  color: black;
+  font-family: "Montserrat";
+}
+
+.btn-grad:hover {
+  font: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 4, 150, 0.09);/* rgba(255, 255, 255, 0.5), linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%); */
+  margin: 10px;
+  padding: 15px 45px;
+  /* text-transform: uppercase; */
+  transition: 0.4s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  border: 0;
+  outline: none;
+}
+
+#btn-grad-parent-div {
+  text-align: center;
+}
