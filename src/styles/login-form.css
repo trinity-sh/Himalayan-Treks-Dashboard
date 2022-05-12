@@ -1,0 +1,96 @@
+#login-root-div {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(#255fef, #25e4ef);
+}
+
+#login-form {
+  text-align: center;
+  padding: 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  width: 80%;
+  max-width: 300px;
+  box-shadow: 0px 0px 50px 10px rgba(17, 17, 17, 0.094);
+  /* border: 1px solid rgb(220, 220, 220); */
+}
+
+.login-title {
+  margin-bottom: 20px;
+  font-family: 'Fira Mono';
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(21, 58, 81);
+}
+
+.inv-cred {
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-family: 'Fira Mono';
+  font-size: 12px;
+  color: rgb(200, 22, 22);
+  background-color: rgb(255, 239, 239);
+}
+
+.text-field {
+  outline: none;
+  outline-color: rgba(0, 119, 255, 0.806);
+  font-weight: bolder;
+  border: none;
+  background-color: rgba(27, 105, 249, 0.064);
+  box-shadow: inset 0px 3px 5px 2px rgba(71, 71, 71, 0.016);
+  border-radius: 10px;
+  padding: 6px;
+  color: rgb(62, 90, 108);
+  padding-left: 12px;
+  padding-right: 12px;
+  width: 90%;
+  margin-top: 3px;
+  height: 20px;
+  font-size: 13px;
+  font-family: 'Fira Mono';
+}
+
+.text-field::placeholder {
+  color: rgb(129, 148, 159);
+}
+
+.button-29 {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .2) 0 2px 4px,rgba(45, 35, 66, .1) 0 7px 13px -3px,rgba(58, 65, 111, .3) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Fira Mono",monospace;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s,transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 13px;
+}
+
+.button-29:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+}
