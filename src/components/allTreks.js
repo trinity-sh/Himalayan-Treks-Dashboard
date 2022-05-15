@@ -125,7 +125,7 @@ export default function (props) {
                   <div className='table-cell'>
                     <div className='item-box-flex-row-item'>
                       <div className='content-font-header-2'>Tag line:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Bum bole! 🕉️</div>
+                      <div className='content-font-sub-2-mono'>Bum bhole!</div>
                     </div>
                   </div>
                   <div className='table-cell'>
