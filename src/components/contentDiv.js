@@ -25,9 +25,9 @@ function contentDiv() {
   return (
     <div id='main-content-div'>
       <Routes>
-        <Route path='/dashboard/all-treks' element={<AllTreks />} />
-        <Route path='/dashboard/blogs' element={<Blogs />} />
-        <Route path='/dashboard/queries' element={<Queries />} />
+        <Route path='/all-treks' element={<AllTreks />} />
+        <Route path='/blogs' element={<Blogs />} />
+        <Route path='/queries' element={<Queries />} />
       </Routes>
     </div>
   );
