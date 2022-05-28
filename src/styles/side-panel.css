@@ -5,6 +5,7 @@
   text-align: center;
   display: block;
   width: 15%;
+  transition: 0.15s;
   height: 100%;
   margin: 0px;
   background-color: rgb(240, 240, 240);
@@ -22,3 +23,60 @@
     visibility: collapse;
   }
 } */
+
+.side-panel { 
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: center;
+  display: block;
+  width: 15%;
+  transition: 0.15s;
+  height: 100%;
+  margin: 0px;
+  background-color: rgb(240, 240, 240);
+    /* url(https://wallpapercave.com/wp/wp5105314.jpg) */;
+  background-size: contain, cover;
+  min-width: 260px;
+  z-index: 6;
+  box-shadow: 1px 0px 8px 5px rgba(0,0,0,0.1)
+}
+
+#floating-btn {
+  margin: 20px;
+  align-items: center;
+  width: 50px;
+  appearance: none;
+  background-color: #2b5df2;
+  border-width: 0px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Ubuntu Mono", monospace;
+  height: 30px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  font-size: 14px;
+  transition: 0.15s;
+  visibility: hidden;
+  position: fixed;
+  z-index: 7000;
+  left: 10px;
+  color: rgb(255, 255, 255);
+  font-family: 'Fira Mono';
+  bottom: 20px;
+  box-shadow: 0px 0px 30px 5px rgba(0, 0, 0, 0.203);
+}
