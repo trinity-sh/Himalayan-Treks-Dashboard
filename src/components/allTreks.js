@@ -1,50 +1,167 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import ContentBar from './contentDivBar';
 import '../styles/form-view.css';
 import '../styles/content-div.css';
 
 export default function (props) {
-  const [formViewState, setFormViewState] = useState(false); // must be falsed
-  var formViewDiv = <>
+  const [trekDataState, setTrekDataState] = useState([]);
+
+  const reload = async () => {
+    const res = await axios({
+      url: 'https://himalyan-explorations.herokuapp.com/api/treksList',
+      method: 'get'
+    });
+    setTrekDataState(res.data);
+  };
+
+  const deleteTrek = async (id) => {
+    if (window.confirm('Are you sure you want to delete this item from the database?')) {
+      await fetch(`https://himalyan-explorations.herokuapp.com/api/trekDelete/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      reload();
+    }
+  };
+
+  const [newFormState, setNewFormState] = useState({});
+  const [updateFormState, setUpdateFormState] = useState({});
+  const [newFormViewState, setNewFormViewState] = useState(false);
+  const [updateFormViewState, setUpdateFormViewState] = useState(false); // must be falsed
+
+  const handleUpdateFormChange = (event) => {
+    setUpdateFormState({
+      ...updateFormState,
+      [event.target.name]: event.target.value
+    });
+    console.log(updateFormState);
+  };
+
+  const updateFormSave = async (id) => {
+    try {
+      console.log(await axios({
+        url: `https://himalyan-explorations.herokuapp.com/api/updateTreks/${id}`,
+        method: 'put',
+        params: updateFormState
+      }));
+    } catch {
+      alert('Update failed :(');
+    }
+  };
+
+  var updateFormViewDiv = <>
     <div id='form-root'>
       <div id='form-sub-root'>
         <div id='all-treks-form-flex'>
-          <div style={{ position: 'absolute', top: '0px', right: '0px' }}><button className='db-button button-cancel' style={{ width: '8px' }} onClick={() => setFormViewState(false)}><b>X</b></button></div>
+          <div style={{ position: 'absolute', top: '0px', right: '0px' }}><button className='db-button button-cancel' style={{ width: '8px' }} onClick={() => setUpdateFormViewState(false)}><b>X</b></button></div>
           <div style={{ textAlign: 'left' }}><span style={{ fontSize: '25px', fontFamily: 'Montserrat' }}><b>All Treks</b> form view:</span></div>
           <br />
           <form>
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Index</span></div>
-            <input type='text' name='index' style={{ width: '100%', marginTop: '3px', height: '20px' }} disabled /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>ID</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='title' defaultValue={updateFormState.id} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} disabled /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek title</span></div>
-            <input type='text' name='trek-title' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Height (in ft)</span></div>
-            <input type='number' name='height' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Tagline</span></div>
-            <input type='text' name='tagline' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Fee (in INR)</span></div>
-            <input type='number' name='fee' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Discount (in %)</span></div>
-            <input type='text' name='primary-key' style={{ width: '100%', marginTop: '3px', height: '20px' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='title' defaultValue={updateFormState.title} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Days</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='days' defaultValue={updateFormState.days} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Height</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='height' defaultValue={updateFormState.height} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='img' defaultValue={updateFormState.img} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Price</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='price' defaultValue={updateFormState.price} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camp location</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='camp_location' defaultValue={updateFormState.camp_location} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Region</span></div>
-            <input type='text' name='region' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Base camp</span></div>
-            <input type='text' name='base-camp' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Duration (in days)</span></div>
-            <input type='number' name='duration' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Thumbnail (URL)</span></div>
-            <input type='file' accept='image/*' name='thumbnail' style={{ width: '100%', marginTop: '3px', height: '30px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Description</span></div>
-            <textarea name='description' style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '300px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Short itinerary</span></div>
-            <textarea name='short-itinerary' style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '200px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Departure</span></div>
-            <input type='text' name='departure' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery</span></div>
-            <textarea name='gallery' style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '100px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='location' defaultValue={updateFormState.location} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #1</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img1' defaultValue={updateFormState.gallery_img1} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #2</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img2' defaultValue={updateFormState.gallery_img2} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #3</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img3' defaultValue={updateFormState.gallery_img3} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #4</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img4' defaultValue={updateFormState.gallery_img4} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #5</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img5' defaultValue={updateFormState.gallery_img5} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #6</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img6' defaultValue={updateFormState.gallery_img6} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image description</span></div>
+            <input type='text' onChange={handleUpdateFormChange} name='img_desp' defaultValue={updateFormState.img_desp} style={{ width: '100%', marginTop: '3px', height: '30px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek description</span></div>
+            <textarea name='desp' onChange={handleUpdateFormChange} defaultValue={updateFormState.desp} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '300px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Itinerary</span></div>
+            <textarea name='iternery' onChange={handleUpdateFormChange} defaultValue={updateFormState.iternery} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '200px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <div><button className='db-button button-cancel' onClick={() => setFormViewState(false)}><b>Cancel</b></button></div>
+              <div><button className='db-button button-cancel' onClick={() => { setUpdateFormViewState(false); setUpdateFormState({}); }}><b>Cancel</b></button></div>
               <div style={{ flex: '1 1 auto' }} />
-              <div><button className='db-button button-update' onClick={() => console.log('update')}><b>Update</b></button></div>
+              <div><button className='db-button button-update' onClick={(e) => { e.preventDefault(); updateFormSave(updateFormState.id); }}><b>Update</b></button></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </>;
+
+  const handleNewFormChange = (event) => {
+    setNewFormState({
+      ...newFormState,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const newFormSave = async () => {
+    await axios({
+      url: 'https://himalyan-explorations.herokuapp.com/api/addTreks',
+      method: 'post',
+      params: newFormState
+    });
+  };
+
+  var newFormViewDiv = <>
+    <div id='form-root'>
+      <div id='form-sub-root'>
+        <div id='all-treks-form-flex'>
+          <div style={{ position: 'absolute', top: '0px', right: '0px' }}><button className='db-button button-cancel' style={{ width: '8px' }} onClick={() => { setNewFormViewState(false); }}><b>X</b></button></div>
+          <div style={{ textAlign: 'left' }}><span style={{ fontSize: '25px', fontFamily: 'Montserrat' }}><b>All Treks</b> form view:</span></div>
+          <br />
+          <form>
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek title</span></div>
+            <input type='text' onChange={handleNewFormChange} name='title' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Days</span></div>
+            <input type='text' onChange={handleNewFormChange} name='days' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Height</span></div>
+            <input type='text' onChange={handleNewFormChange} name='height' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image</span></div>
+            <input type='text' onChange={handleNewFormChange} name='img' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Price</span></div>
+            <input type='text' onChange={handleNewFormChange} name='price' style={{ width: '100%', marginTop: '3px', height: '20px' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camp location</span></div>
+            <input type='text' onChange={handleNewFormChange} name='camp_location' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Region</span></div>
+            <input type='text' onChange={handleNewFormChange} name='location' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #1</span></div>
+            <input type='text' onChange={handleNewFormChange} name='gallery_img1' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #2</span></div>
+            <input type='text' onChange={handleNewFormChange} name='gallery_img2' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #3</span></div>
+            <input type='text' onChange={handleNewFormChange} name='gallery_img3' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #4</span></div>
+            <input type='text' onChange={handleNewFormChange} name='gallery_img4' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #5</span></div>
+            <input type='text' onChange={handleNewFormChange} name='gallery_img5' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #6</span></div>
+            <input type='text' onChange={handleNewFormChange} name='gallery_img6' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image description</span></div>
+            <input type='text' onChange={handleNewFormChange} name='img_desp' style={{ width: '100%', marginTop: '3px', height: '30px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek description</span></div>
+            <textarea name='desp' onChange={handleNewFormChange} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '300px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Itinerary</span></div>
+            <textarea name='iternery' onChange={handleNewFormChange} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '200px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div><button className='db-button button-cancel' onClick={() => { setNewFormViewState(false); setNewFormState({}); }}><b>Cancel</b></button></div>
+              <div style={{ flex: '1 1 auto' }} />
+              <div><button className='db-button button-update' onClick={() => { newFormSave(); setNewFormViewState(false); reload(); }}><b>Save</b></button></div>
             </div>
           </form>
         </div>
@@ -75,149 +192,176 @@ export default function (props) {
     adjustContentDivWidth();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const res = await axios({
+        url: 'https://himalyan-explorations.herokuapp.com/api/treksList',
+        method: 'get'
+      });
+      setTrekDataState(res.data);
+    })();
+  }, []);
+
   return (
     <>
       <div id='content-div-bar'>
         <ContentBar
-          title='All Treks'
-          sub='An enumeration of all mountain treks listed in the website. Edit the objects to make changes reflect post a refresh.'
+          title='Treks'
+          sub='An enumeration of all mountain treks listed in the website.'
         />
         <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
-          <button className="db-button"><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>add</span>&nbsp;<b>New Trek</b></button>
+          <button className="db-button" onClick={() => setNewFormViewState(true)}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>add</span>&nbsp;<b>New Trek</b></button>
         </div>
       </div>
       <div id='db-box' className='content-font-header-2 content-div-indent' style={{ borderRadius: '10px', backgroundColor: 'white', overflow: 'auto', border: '1px solid', borderColor: '#c6c6c6' }}>
-        Database Entries:<br /><br />
-        {
-          /* list items to be added here */
-          <>
-            <div className='item-box'>
-              <div className='table'>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Index:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>0</div>
-                    </div>
-                  </div>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Discount:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>30 %</div>
-                    </div>
+        Database Entries: ({trekDataState.length})<br /><br />
+        {trekDataState.map((item) => <>
+          <div className='item-box'>
+            <div className='table'>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>ID:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.id}</div>
                   </div>
                 </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Trek Title:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Kedarnath Trek</div>
-                    </div>
-                  </div>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Height:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>6900 ft</div>
-                    </div>
-                  </div>
-                </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Tag line:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Bum bhole!</div>
-                    </div>
-                  </div>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Fee:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Rs 69000</div>
-                    </div>
-                  </div>
-                </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Region:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Uttarakhand</div>
-                    </div>
-                  </div>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Base Camp:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Meow Point</div>
-                    </div>
-                  </div>
-                </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Duration:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>9 days</div>
-                    </div>
-                  </div>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'></div>
-                      <div className='content-font-sub-2-mono'></div>
-                    </div>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Title:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.title}</div>
                   </div>
                 </div>
               </div>
-              <div className='table'>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Thumbnail:&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>https://i.pinimg.com/550x/4e/96/d8/4e96d8687d433609e8c72b0ed36f0918.jpg</div>
-                    </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Days:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.days}</div>
                   </div>
                 </div>
-                <div className='table-row'>
-                  <div className='table-cell' style={{ minWidth: '800px' }}>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Description:&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum[d] exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? [D]Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur? [33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</div>
-                    </div>
-                  </div>
-                </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Short Itinerary:&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.</div>
-                    </div>
-                  </div>
-                </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Departure:&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>['APRIL 2069', 'MARCH 6969']</div>
-                    </div>
-                  </div>
-                </div>
-                <div className='table-row'>
-                  <div className='table-cell'>
-                    <div className='item-box-flex-row-item'>
-                      <div className='content-font-header-2'>Gallery:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                      <div className='content-font-sub-2-mono'>['https://i.pinimg.com/550x/4e/96/d8/4e96d8687d433609e8c72b0ed36f0918.jpg', 'https://i.pinimg.com/550x/4e/96/d8/4e96d8687d433609e8c72b0ed36f0918.jpg', 'https://i.pinimg.com/550x/4e/96/d8/4e96d8687d433609e8c72b0ed36f0918.jpg', 'https://i.pinimg.com/550x/4e/96/d8/4e96d8687d433609e8c72b0ed36f0918.jpg']</div>
-                    </div>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Height:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.height}</div>
                   </div>
                 </div>
               </div>
-              <div style={{ textAlign: 'right', display: 'flex', minWidth: '800px' }}>
-                <div style={{ flex: '1' }} />
-                <button className="db-button" onClick={() => setFormViewState(true)}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>edit_note</span>&nbsp;<b>Edit</b></button>
-                <button className="db-button"><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>delete_forever</span>&nbsp;<b>Delete</b></button>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Header Image:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.img}</div>
+                  </div>
+                </div>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Price:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.price}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Camp location:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.camp_location}</div>
+                  </div>
+                </div>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Region:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.location}</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div style={{ height: '30px' }} />
-          </>
+            <div className='table'>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Gallery image 1:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.gallery_img1}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Gallery image 2:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.gallery_img2}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Gallery image 3:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.gallery_img3}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Gallery image 4:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.gallery_img4}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Gallery image 5:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.gallery_img5}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Gallery image 6:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.gallery_img6}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell' style={{ minWidth: '800px' }}>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Header Image Description:&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.img_desp}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Trek Description:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.desp}</div>
+                  </div>
+                </div>
+              </div>
+              <div className='table-row'>
+                <div className='table-cell'>
+                  <div className='item-box-flex-row-item'>
+                    <div className='content-font-header-2'>Itinerary:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-sub-2-mono'>{item.iternery}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style={{ textAlign: 'right', display: 'flex', minWidth: '800px' }}>
+              <div style={{ flex: '1' }} />
+              {/* <button className="db-button" onClick={() => { setUpdateFormViewState(true); setUpdateFormState(item); }}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>edit_note</span>&nbsp;<b>Edit</b></button> */}
+              <button className="db-button" onClick={() => deleteTrek(item.id)}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>delete_forever</span>&nbsp;<b>Delete</b></button>
+            </div>
+          </div>
+          <div style={{ height: '30px' }} />
+        </>)
         }
         &nbsp;
       </div>
-      {formViewState ? formViewDiv : <> </>}
+      {/* updateFormViewState ? updateFormViewDiv : <> </> */}
+      {newFormViewState ? newFormViewDiv : <> </>}
     </>
   );
 }
