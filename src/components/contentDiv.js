@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import AllTreks from '../components/allTreks';
-import Blogs from '../components/blogs.js';
-import Queries from '../components/queries.js';
+import DiscountedTreks from '../components/discountedTreks';
+import Blogs from '../components/blogs';
+import Bookings from '../components/queries';
 import '../styles/content-div.css';
 
 function contentDiv() {
@@ -26,8 +27,9 @@ function contentDiv() {
     <div id='main-content-div'>
       <Routes>
         <Route path='/all-treks' element={<AllTreks />} />
+        <Route path='/discounted-treks' element={<DiscountedTreks />} />
         <Route path='/blogs' element={<Blogs />} />
-        <Route path='/queries' element={<Queries />} />
+        <Route path='/bookings' element={<Bookings />} />
       </Routes>
     </div>
   );
