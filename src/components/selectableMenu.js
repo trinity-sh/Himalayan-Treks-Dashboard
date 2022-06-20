@@ -1,47 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SMenuItem from '../components/selectableMenuItem';
 import '../styles/selectable-menu.css';
 
 function selectableMenu(props) {
-  const onClickDeselectOthers = (thisBtn) => {
-    var children = document.getElementById('selectable-menu').getElementsByTagName('div');
-    // deselect all but the element btn
-    for (var i = 0; i < children.length; i++)
-      if (children[i].getElementsByTagName('button')[0].id !== thisBtn) {
-        children[i].getElementsByTagName('button')[0].className = 'selectable-menu-item';
-        var buttonSpans = children[i].getElementsByTagName('button')[0].getElementsByTagName('span');
-        buttonSpans[0].className = 'material-symbols-outlined selectable-menu-item-icon';
-        buttonSpans[1].className = 'selectable-menu-item-label';
-      }
-  };
-
-  const onClickThisBtn = (thisBtn) => {
-    onClickDeselectOthers(`${thisBtn}-btn`);
-    document.getElementById(`${thisBtn}-btn`).className = `selectable-menu-item-active`;
-    document.getElementById(`${thisBtn}-btn-icon`).className = `material-symbols-outlined selectable-menu-item-active-icon`;
-    document.getElementById(`${thisBtn}-btn-label`).className = `selectable-menu-item-active-label`;
-  };
-
+  function hi() {
+    console.log(1);
+  }
+  // dashSelectables & dashSelectableItems must describe the same components
+  const dashSelectablesList = ['all-treks-btn', 'blogs-btn'];
   const dashSelectables = <>
-    <SMenuItem id='all-treks-btn' icon_id='all-treks-btn-icon' label_id='all-treks-btn-label' icon='landscape' label='All treks' onClickCallback={() => onClickThisBtn('all-treks')} />
-    <SMenuItem id='blogs-btn' icon_id='blogs-btn-icon' label_id='blogs-btn-label' icon='newspaper' label='Blogs' onClickCallback={() => onClickThisBtn('blogs')} />
+    <SMenuItem id='all-treks-btn' icon='landscape' label='All treks' isInvoked='true' onClickCallback={() => onClickThisBtn('all-treks-btn')} />
+    <SMenuItem id='blogs-btn' icon='newspaper' label='Blogs' onClickCallback={() => onClickThisBtn('blogs-btn')} />
   </>;
 
+  const profSelectablesList = ['edit-users-btn', 'ch-username-btn', 'ch-pwd-btn'];
   const profSelectables = <>
-    <SMenuItem id='ch-username-btn' icon='key' label='Change username' onClickCallback={() => onClickThisBtn('ch-username')} />
-    <SMenuItem id='ch-pwd-btn' icon='pin' label='Change password' onClickCallback={() => onClickThisBtn('ch-pwd')} />
-    <SMenuItem id='edit-users-btn' icon='group' label='Edit users' onClickCallback={() => onClickThisBtn('edit-users')} />
+    <SMenuItem id='edit-users-btn' icon='group' label='Edit users' isInvoked='true' onClickCallback={() => onClickThisBtn('edit-users-btn')} />
+    <SMenuItem id='ch-username-btn' icon='key' label='Change username' onClickCallback={() => onClickThisBtn('ch-username-btn')} />
+    <SMenuItem id='ch-pwd-btn' icon='pin' label='Change password' onClickCallback={() => onClickThisBtn('ch-pwd-btn')} />
   </>;
+
+  const [selectableMenuVar, setSelectableMenuVarState] = useState((props.invoked === 'dash-btn') ? dashSelectables : profSelectables);
+  useEffect(() => setSelectableMenuVarState((props.invoked === 'dash-btn') ? dashSelectables : (props.invoked === 'prof-btn') ? profSelectables : <> </>), [props.invoked]);
+
+  const onClickThisBtn = async (thisBtn) => {
+    if (thisBtn in dashSelectablesList)
+      await setSelectableMenuVarState(<>
+        <SMenuItem id='all-treks-btn' icon='landscape' label='All treks' isInvoked={thisBtn === 'all-treks-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('all-treks-btn')} />
+        <SMenuItem id='blogs-btn' icon='newspaper' label='Blogs' isInvoked={thisBtn === 'blogs-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('blogs-btn')} />
+      </>);
+    else if (thisBtn in profSelectablesList)
+      await setSelectableMenuVarState(<>
+        <SMenuItem id='edit-users-btn' icon='group' label='Edit users' isInvoked={thisBtn === 'edit-users-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('edit-users-btn')} />
+        <SMenuItem id='ch-username-btn' icon='key' label='Change username' isInvoked={thisBtn === 'ch-username-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('ch-username-btn')} />
+        <SMenuItem id='ch-pwd-btn' icon='pin' label='Change password' isInvoked={thisBtn === 'ch-pwd-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('ch-pwd-btn')} />
+      </>);
+    console.log(selectableMenuVar)
+  };
 
   return (
     <div id='selectable-menu'>
-      {(() => {
-        if (props.invoked === 'prof-btn')
-          return profSelectables;
-        else if (props.invoked === 'dash-btn')
-          return dashSelectables;
-        else return '';
-      })()}
+      {selectableMenuVar}
     </div>
   );
 }
