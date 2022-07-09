@@ -6,7 +6,7 @@ import Blogs from '../components/blogs';
 import Bookings from '../components/queries';
 import '../styles/content-div.css';
 
-function contentDiv() {
+function ContentDiv() {
   useEffect(() => {
     const adjustContentDivWidth = () => {
       // set panel and content div widths
@@ -20,7 +20,9 @@ function contentDiv() {
     };
     window.addEventListener('resize', adjustContentDivWidth);
     // initial rendering after DOM Loads
-    adjustContentDivWidth();
+    setTimeout(() => {
+      adjustContentDivWidth();
+    }, 1);
   }, []);
 
   return (
@@ -35,4 +37,4 @@ function contentDiv() {
   );
 }
 
-export default contentDiv;
+export default ContentDiv;

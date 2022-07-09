@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login-form.css';
 
-function loginForm() {
+function LoginForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -53,4 +53,4 @@ function loginForm() {
   );
 }
 
-export default loginForm;
+export default LoginForm;

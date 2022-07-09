@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/selectable-menu.css';
 
-function selectableMenuItem(props) {
+function SelectableMenuItem(props) {
   const [isInvoked, setIsInvokedState] = useState(props.isInvoked);
   useEffect(() => setIsInvokedState(props.isInvoked), [props.isInvoked]);
 
@@ -25,4 +25,4 @@ function selectableMenuItem(props) {
   );
 }
 
-export default selectableMenuItem;
+export default SelectableMenuItem;

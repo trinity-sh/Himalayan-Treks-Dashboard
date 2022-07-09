@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SMenuItem from '../components/selectableMenuItem';
 import '../styles/selectable-menu.css';
 
-function selectableMenu(props) {
+function SelectableMenu(props) {
   const [selectedMenu, setSelectedMenuState] = useState('edit-users-btn');
 
   // dashSelectables & dashSelectableItems must describe the same components
@@ -67,4 +67,4 @@ function selectableMenu(props) {
   );
 }
 
-export default selectableMenu;
+export default SelectableMenu;

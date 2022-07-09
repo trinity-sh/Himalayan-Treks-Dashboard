@@ -6,7 +6,7 @@ import Logo from '../assets/logo.png';
 import '../styles/content-div.css';
 import '../styles/side-panel.css';
 
-function sidePanel() {
+function SidePanel() {
   const [sectBtn, setSectBtnState] = useState(() => {
     return { invoked: 'dash-btn' };
   });
@@ -42,29 +42,14 @@ function sidePanel() {
     document.getElementById('prof-btn-label').className = 'btn-grad-active-label';
   };
 
-  useEffect(() => {
-    const adjustSidePanelWidth = () => {
-      if (secondPanelIsOpen)
-        setSecondPanelIsOpen(false);
-      if (window.innerWidth < 800) {
-        setPanelIsOpen(false);
-      } else {
-        setPanelIsOpen(true);
-      }
-    };
-    window.addEventListener('resize', adjustSidePanelWidth);
-    // initial rendering after DOM Loads
-    adjustSidePanelWidth();
-  }, []);
-
   const regulateSidePanel = () => {
     let sidePanel = document.getElementById('side-panel');
     let floatingBtn = document.getElementById('floating-btn');
     if (!panelIsOpen) {
       floatingBtn.style.visibility = 'visible';
       sidePanel.style.visibility = 'hidden';
-      sidePanel.style.width = '0%';
       sidePanel.style.minWidth = '0px';
+      sidePanel.style.width = '0%';
     } else {
       floatingBtn.style.visibility = 'hidden';
       sidePanel.style.visibility = 'visible';
@@ -91,6 +76,21 @@ function sidePanel() {
 
   // default selection is 'dashboard/all-treks'
   useEffect(() => { onClickDashBtn(); }, []);
+
+  useEffect(() => {
+    const adjustSidePanelWidth = () => {
+      if (secondPanelIsOpen)
+        setSecondPanelIsOpen(false);
+      if (window.innerWidth < 800) {
+        setPanelIsOpen(false);
+      } else {
+        setPanelIsOpen(true);
+      }
+    };
+    window.addEventListener('resize', adjustSidePanelWidth);
+    // initial rendering after DOM Loads
+    adjustSidePanelWidth();
+  }, []);
 
   return (
     <>
@@ -123,4 +123,4 @@ function sidePanel() {
   );
 }
 
-export default sidePanel;
+export default SidePanel;

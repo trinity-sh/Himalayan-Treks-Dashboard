@@ -1,6 +1,6 @@
 import React from 'react';
 
-function separator(props) {
+function Separator(props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', marginTop: props.marginTop, marginBottom: props.marginBottom, alignItems: 'center' }}>
       <div style={{ flex: '1' }} />
@@ -12,4 +12,4 @@ function separator(props) {
   );
 }
 
-export default separator;
+export default Separator;

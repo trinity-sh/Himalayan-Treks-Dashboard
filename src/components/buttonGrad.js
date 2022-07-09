@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/button-grad.css';
 
-function buttonGrad(props) {
+function ButtonGrad(props) {
   return (
     <div id='btn-grad-parent-div'>
       <button id={props.id} className='btn-grad' onClick={() => props.onClickCallback()}>
@@ -16,4 +16,4 @@ function buttonGrad(props) {
   );
 }
 
-export default buttonGrad;
+export default ButtonGrad;
