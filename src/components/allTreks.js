@@ -4,7 +4,7 @@ import ContentBar from './contentDivBar';
 import '../styles/form-view.css';
 import '../styles/content-div.css';
 
-export default function (props) {
+function AllTreks(props) {
   const [trekDataState, setTrekDataState] = useState([]);
 
   const reload = async () => {
@@ -111,10 +111,14 @@ export default function (props) {
   };
 
   const newFormSave = async () => {
+    const form = new FormData();
+    for (const key in newFormState)
+      form.append(key, newFormState[key]);
+
     await axios({
       url: 'https://himalyan-explorations.herokuapp.com/api/addTreks',
       method: 'post',
-      params: newFormState
+      data: form
     });
   };
 
@@ -365,3 +369,5 @@ export default function (props) {
     </>
   );
 }
+
+export default AllTreks;
