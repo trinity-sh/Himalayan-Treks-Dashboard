@@ -9,7 +9,7 @@ function Camping(props) {
 
   const reload = async () => {
     const res = await axios({
-      url: 'https://himalyan-explorations.herokuapp.com/api/treksList',
+      url: 'https://himalyan-explorations.herokuapp.com/api/campingList',
       method: 'get'
     });
     setTrekDataState(res.data);
@@ -41,7 +41,7 @@ function Camping(props) {
   const updateFormSave = async (id) => {
     try {
       console.log(await axios({
-        url: `https://himalyan-explorations.herokuapp.com/api/updateTreks/${id}`,
+        url: `https://himalyan-explorations.herokuapp.com/api/campingDelete/${id}`,
         method: 'put',
         params: updateFormState
       }));
@@ -116,7 +116,7 @@ function Camping(props) {
       form.append(key, newFormState[key]);
 
     await axios({
-      url: 'https://himalyan-explorations.herokuapp.com/api/addTreks',
+      url: 'https://himalyan-explorations.herokuapp.com/api/addCamping',
       method: 'post',
       data: form
     });
@@ -127,10 +127,10 @@ function Camping(props) {
       <div id='form-sub-root'>
         <div id='all-treks-form-flex'>
           <div style={{ position: 'absolute', top: '0px', right: '0px' }}><button className='db-button button-cancel' style={{ width: '8px' }} onClick={() => { setNewFormViewState(false); }}><b>X</b></button></div>
-          <div style={{ textAlign: 'left' }}><span style={{ fontSize: '25px', fontFamily: 'Montserrat' }}><b>All Treks</b> form view:</span></div>
+          <div style={{ textAlign: 'left' }}><span style={{ fontSize: '25px', fontFamily: 'Montserrat' }}><b>Camping</b> form view:</span></div>
           <br />
           <form>
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek title</span></div>
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camp title</span></div>
             <input type='text' onChange={handleNewFormChange} name='title' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Days</span></div>
             <input type='text' onChange={handleNewFormChange} name='days' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
@@ -158,7 +158,7 @@ function Camping(props) {
             <input type='text' onChange={handleNewFormChange} name='gallery_img6' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image description</span></div>
             <input type='text' onChange={handleNewFormChange} name='img_desp' style={{ width: '100%', marginTop: '3px', height: '30px', fontFamily: 'Fira Mono' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek description</span></div>
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camp description</span></div>
             <textarea name='desp' onChange={handleNewFormChange} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '300px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Itinerary</span></div>
             <textarea name='iternery' onChange={handleNewFormChange} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '200px', fontFamily: 'Fira Mono' }} /><br /><br />
@@ -199,7 +199,7 @@ function Camping(props) {
   useEffect(() => {
     (async () => {
       const res = await axios({
-        url: 'https://himalyan-explorations.herokuapp.com/api/treksList',
+        url: 'https://himalyan-explorations.herokuapp.com/api/campingList',
         method: 'get'
       });
       setTrekDataState(res.data);
@@ -210,8 +210,8 @@ function Camping(props) {
     <>
       <div id='content-div-bar'>
         <ContentBar
-          title='Treks'
-          sub='An enumeration of all mountain treks listed in the website.'
+          title='Camping'
+          sub='An enumeration of all camp tours listed in the website.'
         />
         <div style={{ position: 'fixed', top: '10px', right: '10px' }}>
           <button className="db-button" onClick={() => setNewFormViewState(true)}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>add</span>&nbsp;<b>New Camping</b></button>
@@ -339,7 +339,7 @@ function Camping(props) {
               <div className='table-row'>
                 <div className='table-cell'>
                   <div className='item-box-flex-row-item'>
-                    <div className='content-font-header-2'>Trek Description:&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div className='content-font-header-2'>Camp Description:&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     <div className='content-font-sub-2-mono'>{item.desp}</div>
                   </div>
                 </div>
