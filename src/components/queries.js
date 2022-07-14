@@ -5,13 +5,16 @@ import '../styles/form-view.css';
 import '../styles/content-div.css';
 
 export default function (props) {
+  const [isLoadingState, setIsLoadingState] = useState();
   const [trekDataState, setTrekDataState] = useState([]);
 
   const reload = async () => {
+    setIsLoadingState(true);
     const res = await axios({
       url: 'https://himalyan-explorations.herokuapp.com/api/bookNowList',
       method: 'get'
     });
+    setIsLoadingState(false);
     setTrekDataState(res.data);
   };
 
@@ -117,10 +120,12 @@ export default function (props) {
 
   useEffect(() => {
     (async () => {
+      setIsLoadingState(true);
       const res = await axios({
         url: 'https://himalyan-explorations.herokuapp.com/api/bookNowList',
         method: 'get'
       });
+      setIsLoadingState(false);
       setTrekDataState(res.data);
     })();
   }, []);
@@ -136,7 +141,7 @@ export default function (props) {
         </div>
       </div>
       <div id='db-box' className='content-font-header-2 content-div-indent' style={{ borderRadius: '10px', backgroundColor: 'white', overflow: 'auto', border: '1px solid', borderColor: '#c6c6c6' }}>
-        Database Entries: ({trekDataState.length})<br /><br />
+        Database Entries: ({isLoadingState ? 'Loading...' : trekDataState.length})<br /><br />
         {trekDataState.map((item) => <>
           <div className='item-box'>
             <div className='table'>

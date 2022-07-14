@@ -6,12 +6,15 @@ import '../styles/content-div.css';
 
 function AllTreks(props) {
   const [trekDataState, setTrekDataState] = useState([]);
+  const [isLoadingState, setIsLoadingState] = useState();
 
   const reload = async () => {
+    setIsLoadingState(true);
     const res = await axios({
       url: 'https://himalyan-explorations.herokuapp.com/api/treksList',
       method: 'get'
     });
+    setIsLoadingState(false);
     setTrekDataState(res.data);
   };
 
@@ -120,6 +123,7 @@ function AllTreks(props) {
       method: 'post',
       data: form
     });
+    reload();
   };
 
   var newFormViewDiv = <>
@@ -198,10 +202,12 @@ function AllTreks(props) {
 
   useEffect(() => {
     (async () => {
+      setIsLoadingState(true);
       const res = await axios({
         url: 'https://himalyan-explorations.herokuapp.com/api/treksList',
         method: 'get'
       });
+      setIsLoadingState(false);
       setTrekDataState(res.data);
     })();
   }, []);
@@ -218,7 +224,7 @@ function AllTreks(props) {
         </div>
       </div>
       <div id='db-box' className='content-font-header-2 content-div-indent' style={{ borderRadius: '10px', backgroundColor: 'white', overflow: 'auto', border: '1px solid', borderColor: '#c6c6c6' }}>
-        Database Entries: ({trekDataState.length})<br /><br />
+        Database Entries: ({isLoadingState ? 'Loading...' : trekDataState.length})<br /><br />
         {trekDataState.map((item) => <>
           <div className='item-box'>
             <div className='table'>
