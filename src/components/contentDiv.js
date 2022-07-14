@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AllTreks from '../components/allTreks';
 import DiscountedTreks from '../components/discountedTreks';
+import Camping from '../components/camping';
 import Blogs from '../components/blogs';
 import Bookings from '../components/queries';
 import '../styles/content-div.css';
@@ -30,6 +31,7 @@ function ContentDiv() {
       <Routes>
         <Route path='/all-treks' element={<AllTreks />} />
         <Route path='/discounted-treks' element={<DiscountedTreks />} />
+        <Route path='/camping' element={<Camping />} />
         <Route path='/blogs' element={<Blogs />} />
         <Route path='/bookings' element={<Bookings />} />
       </Routes>
