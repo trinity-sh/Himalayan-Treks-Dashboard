@@ -4,7 +4,7 @@ import ContentBar from './contentDivBar';
 import '../styles/form-view.css';
 import '../styles/content-div.css';
 
-export default function (props) {
+function DiscountedTreks(props) {
   const [trekDataState, setTrekDataState] = useState([]);
 
   const reload = async () => {
@@ -100,10 +100,14 @@ export default function (props) {
   };
 
   const newFormSave = async () => {
+    const form = new FormData();
+    for (const key in newFormState)
+      form.append(key, newFormState[key]);
+
     await axios({
       url: 'https://himalyan-explorations.herokuapp.com/api/discountForm',
       method: 'post',
-      params: newFormState
+      data: form
     });
     reload();
   };
@@ -126,7 +130,7 @@ export default function (props) {
             <input type='text' onChange={handleNewFormChange} name='img' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Price</span></div>
             <input type='text' onChange={handleNewFormChange} name='price' style={{ width: '100%', marginTop: '3px', height: '20px' }} /><br /><br />
-            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camp location</span></div>
+            <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Trek location</span></div>
             <input type='text' onChange={handleNewFormChange} name='camp_location' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Region</span></div>
             <input type='text' onChange={handleNewFormChange} name='location' style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
@@ -253,7 +257,7 @@ export default function (props) {
               <div className='table-row'>
                 <div className='table-cell'>
                   <div className='item-box-flex-row-item'>
-                    <div className='content-font-header-2'>Camp location:&nbsp;&nbsp;</div>
+                    <div className='content-font-header-2'>Trek location:&nbsp;&nbsp;</div>
                     <div className='content-font-sub-2-mono'>{item.camp_location}</div>
                   </div>
                 </div>
@@ -355,3 +359,5 @@ export default function (props) {
     </>
   );
 }
+
+export default DiscountedTreks;
