@@ -7,10 +7,11 @@ function SelectableMenu(props) {
   const [selectedMenu, setSelectedMenuState] = useState('edit-users-btn');
 
   // dashSelectables & dashSelectableItems must describe the same components
-  const dashSelectablesList = ['all-treks-btn', 'discounted-treks-btn', 'blogs-btn', 'booking-btn'];
+  const dashSelectablesList = ['all-treks-btn', 'discounted-treks-btn', 'camping-btn', 'blogs-btn', 'booking-btn'];
   const dashSelectables = () => <>
     <SMenuItem id='all-treks-btn' icon='landscape' label='Treks' isInvoked={selectedMenu === 'all-treks-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('all-treks-btn')} />
     <SMenuItem id='discounted-treks-btn' icon='percent' label='Discounted treks' isInvoked={selectedMenu === 'discounted-treks-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('discounted-treks-btn')} />
+    <SMenuItem id='camping-btn' icon='camping' label='Camping' isInvoked={selectedMenu === 'camping-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('camping-btn')} />
     <SMenuItem id='blogs-btn' icon='newspaper' label='Blogs' isInvoked={selectedMenu === 'blogs-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('blogs-btn')} />
     <SMenuItem id='booking-btn' icon='hotel' label='Bookings' isInvoked={selectedMenu === 'booking-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('booking-btn')} />
   </>;
@@ -31,6 +32,7 @@ function SelectableMenu(props) {
       await setSelectableMenuVarState(<>
         <SMenuItem id='all-treks-btn' icon='landscape' label='Treks' isInvoked={thisBtn === 'all-treks-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('all-treks-btn')} />
         <SMenuItem id='discounted-treks-btn' icon='percent' label='Discounted treks' isInvoked={thisBtn === 'discounted-treks-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('discounted-treks-btn')} />
+        <SMenuItem id='camping-btn' icon='camping' label='Camping' isInvoked={thisBtn === 'camping-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('camping-btn')} />
         <SMenuItem id='blogs-btn' icon='newspaper' label='Blogs' isInvoked={thisBtn === 'blogs-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('blogs-btn')} />
         <SMenuItem id='booking-btn' icon='hotel' label='Bookings' isInvoked={thisBtn === 'booking-btn' ? 'true' : 'false'} onClickCallback={() => onClickThisBtn('booking-btn')} />
       </>);
@@ -38,11 +40,13 @@ function SelectableMenu(props) {
         (() => { navigate('/dashboard/all-treks'); setSelectedMenuState('all-treks-btn') })() :
         (thisBtn === 'discounted-treks-btn') ?
           (() => { navigate('/dashboard/discounted-treks'); setSelectedMenuState('discounted-treks-btn') })() :
-          (thisBtn === 'blogs-btn') ?
-            (() => { navigate('/dashboard/blogs'); setSelectedMenuState('blogs-btn'); })() :
-            (thisBtn === 'booking-btn') ?
-              (() => { navigate('/dashboard/bookings'); setSelectedMenuState('booking-btn'); })() :
-              console.error('Invalid button: ', thisBtn);
+          (thisBtn === 'camping-btn') ?
+            (() => { navigate('/dashboard/camping'); setSelectedMenuState('camping-btn') })() :
+            (thisBtn === 'blogs-btn') ?
+              (() => { navigate('/dashboard/blogs'); setSelectedMenuState('blogs-btn'); })() :
+              (thisBtn === 'booking-btn') ?
+                (() => { navigate('/dashboard/bookings'); setSelectedMenuState('booking-btn'); })() :
+                console.error('Invalid button: ', thisBtn);
     }
     else if (profSelectablesList.includes(thisBtn)) {
       await setSelectableMenuVarState(<>
