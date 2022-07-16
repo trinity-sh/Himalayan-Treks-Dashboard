@@ -123,6 +123,7 @@ function Camping(props) {
       method: 'post',
       data: form
     });
+    reload();
   };
 
   var newFormViewDiv = <>
