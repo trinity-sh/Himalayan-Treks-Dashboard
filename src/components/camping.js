@@ -20,7 +20,7 @@ function Camping(props) {
 
   const deleteTrek = async (id) => {
     if (window.confirm('Are you sure you want to delete this item from the database?')) {
-      await fetch(`https://himalyan-explorations.herokuapp.com/api/trekDelete/${id}`, {
+      await fetch(`https://himalyan-explorations.herokuapp.com/api/campingDelete/${id}`, {
         method: 'DELETE',
         credentials: 'include',
       });
