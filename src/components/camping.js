@@ -43,17 +43,21 @@ function Camping(props) {
 
   const updateFormSave = async (id) => {
     try {
-      console.log(await axios({
-        url: `https://himalyan-explorations.herokuapp.com/api/campingDelete/${id}`,
+      await axios({
+        url: `https://himalyan-explorations.herokuapp.com/api/updateCamping/${updateFormState.id}`,
         method: 'put',
-        params: updateFormState
-      }));
+        data: updateFormState,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      reload();
     } catch {
       alert('Update failed :(');
     }
   };
 
-  var updateFormViewDiv = <>
+  var updateFormViewDiv = (item) => <>
     <div id='form-root'>
       <div id='form-sub-root'>
         <div id='all-treks-form-flex'>
@@ -62,43 +66,43 @@ function Camping(props) {
           <br />
           <form>
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>ID</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='title' defaultValue={updateFormState.id} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} disabled /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='id' value={item.id} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} disabled /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camping title</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='title' defaultValue={updateFormState.title} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='title' value={item.title} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Days</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='days' defaultValue={updateFormState.days} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='days' value={item.days} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Height</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='height' defaultValue={updateFormState.height} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='height' value={item.height} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='img' defaultValue={updateFormState.img} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='img' value={item.img} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Price</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='price' defaultValue={updateFormState.price} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='price' value={item.price} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camp location</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='camp_location' defaultValue={updateFormState.camp_location} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='camp_location' value={item.camp_location} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Region</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='location' defaultValue={updateFormState.location} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='location' value={item.location} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #1</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='gallery_img1' defaultValue={updateFormState.gallery_img1} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img1' value={item.gallery_img1} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #2</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='gallery_img2' defaultValue={updateFormState.gallery_img2} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img2' value={item.gallery_img2} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #3</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='gallery_img3' defaultValue={updateFormState.gallery_img3} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img3' value={item.gallery_img3} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #4</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='gallery_img4' defaultValue={updateFormState.gallery_img4} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img4' value={item.gallery_img4} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #5</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='gallery_img5' defaultValue={updateFormState.gallery_img5} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img5' value={item.gallery_img5} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Gallery image #6</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='gallery_img6' defaultValue={updateFormState.gallery_img6} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='gallery_img6' value={item.gallery_img6} style={{ width: '100%', marginTop: '3px', resize: 'vertical', height: '20px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Header image description</span></div>
-            <input type='text' onChange={handleUpdateFormChange} name='img_desp' defaultValue={updateFormState.img_desp} style={{ width: '100%', marginTop: '3px', height: '30px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <input type='text' onChange={handleUpdateFormChange} name='img_desp' value={item.img_desp} style={{ width: '100%', marginTop: '3px', height: '30px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Camping description</span></div>
-            <textarea name='desp' onChange={handleUpdateFormChange} defaultValue={updateFormState.desp} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '300px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <textarea name='desp' onChange={handleUpdateFormChange} value={item.desp} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '300px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ textAlign: 'left' }}><span style={{ fontFamily: 'Montserrat', fontSize: '13px', fontWeight: '500' }}>Itinerary</span></div>
-            <textarea name='iternery' onChange={handleUpdateFormChange} defaultValue={updateFormState.iternery} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '200px', fontFamily: 'Fira Mono' }} /><br /><br />
+            <textarea name='iternery' onChange={handleUpdateFormChange} value={item.iternery} style={{ width: '100%', marginTop: '3px', resize: 'vertical', minHeight: '200px', fontFamily: 'Fira Mono' }} /><br /><br />
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <div><button className='db-button button-cancel' onClick={() => { setUpdateFormViewState(false); setUpdateFormState({}); }}><b>Cancel</b></button></div>
               <div style={{ flex: '1 1 auto' }} />
-              <div><button className='db-button button-update' onClick={(e) => { e.preventDefault(); updateFormSave(updateFormState.id); }}><b>Update</b></button></div>
+              <div><button className='db-button button-update' onClick={() => { updateFormSave(); setUpdateFormViewState(false); reload(); }}><b>Save</b></button></div>
             </div>
           </form>
         </div>
@@ -361,7 +365,7 @@ function Camping(props) {
             </div>
             <div style={{ textAlign: 'right', display: 'flex', minWidth: '800px' }}>
               <div style={{ flex: '1' }} />
-              {/* <button className="db-button" onClick={() => { setUpdateFormViewState(true); setUpdateFormState(item); }}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>edit_note</span>&nbsp;<b>Edit</b></button> */}
+              <button className="db-button" onClick={() => { setUpdateFormViewState(true); setUpdateFormState(item); }}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>edit_note</span>&nbsp;<b>Edit</b></button>
               <button className="db-button" onClick={() => deleteTrek(item.id)}><span className='material-symbols-outlined' style={{ fontSize: '20px' }}>delete_forever</span>&nbsp;<b>Delete</b></button>
             </div>
           </div>
@@ -370,7 +374,7 @@ function Camping(props) {
         }
         &nbsp;
       </div>
-      {/* updateFormViewState ? updateFormViewDiv : <> </> */}
+      {updateFormViewState ? updateFormViewDiv(updateFormState) : <> </>}
       {newFormViewState ? newFormViewDiv : <> </>}
     </>
   );
